@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/gorban/anaconda3/bin/python3.7
 
 # ===================== #
 # End-to-end simulation #
