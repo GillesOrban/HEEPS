@@ -21,7 +21,7 @@ def read_config(verbose=False, **update_conf):
     # required directories for data (e.g. fits files)
     dir_current = os.getcwd(),
     dir_input = 'input_files',
-    dir_output = 'output_files',
+    dir_output = 'output_files_Cbasic_v3',
     dir_temp = 'temp_files',
 
     # =============================================================================
@@ -73,14 +73,11 @@ def read_config(verbose=False, **update_conf):
     mag_ref = 0,                        # reference magnitude for star and background fluxes
     flux_star = 8.999e+10,              # [e-/s] HCI-L long, mag 0 (Jan 21, 2020)
     flux_bckg = 8.878e+04,              # [e-/s/pix]
-<<<<<<< HEAD
-    add_bckg = False,                   # true means background flux and photon noise are added 
-=======
     starphot = 1e11,                    # aperture flux normalization (for VIP)
-    cube_duration = 3600,               # cube duration in seconds
->>>>>>> 7c2517e1df985eafcca6dd94d0463e496b7c9993
+#     cube_duration = 3600,               # cube duration in seconds
     lat = -24.59,                       # telescope latitude in deg (Armazones=-24.59 ,Paranal -24.63)
     dec = -5,                           # star declination in deg (e.g. 51 Eri -2.47)
+#     file_lyot_stop = 'pupil/ls_ravc_allglass_285.fits', # lyot stop file
     file_lyot_stop = 'pupil/ls_ravc_allglass_285.fits', # lyot stop file
     ls_dRext = 0.0282,                  # LS Rext undersize (% diam ext)
     ls_dRint = 0.0282,                  # LS Rint oversize (% diam ext)
@@ -152,7 +149,7 @@ def read_config(verbose=False, **update_conf):
 
     add_phase = True,                   # phase screens (SCAO residuals, NCPA, petal piston)
 #     file_phase = 'wavefront/COMPASS_201810_RandomWind_100screens_meters.fits',
-    file_phase = '/mnt/disk4tb/METIS/METIS_CBASIC_CUBES/cube_Cbasic_20210219_600s_100ms_0piston_meters_scao_only_285.fits',
+    file_phase = '/mnt/disk4tb/METIS/METIS_CBASIC_CUBES/cube_Cbasic_v3_20210223_600s_100ms_scao_only_285.fits',
     add_amp = False,                    # amplitude screens (Talbot effect)
     file_amp = 'wavefront/Talbot_LM_20201120_IMGP_meridian_allglass.fits',
 

@@ -82,7 +82,7 @@ conf['send_message'] = 'cube calculation finished OK.'
 conf['send_subject'] = 'fenrir noreply'
 
 # useful inputs
-tag = 'Cbasic_20210219'
+tag = 'Cbasic_v3_20210223'
 prefix = 'Residual_phase_screen_'#'tarPhase_1hr_100ms_'
 suffix = 'ms'
 duration = 600 #3600
@@ -91,11 +91,11 @@ start = 2101#0#1001
 nimg = 720
 npupil = 285
 pad_frame = False
-savename = 'cube_%s_%ss_%sms_0piston_meters_scao_only_%s_GOXinterp.fits'%(tag, duration, samp, npupil)
+savename = 'cube_%s_%ss_%sms_scao_only_%s_GOXinterp.fits'%(tag, duration, samp, npupil)
 
 #input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_2020-10-16T10:25:14/residualPhaseScreens'
 #input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_2020-11-05T12:40:27/residualPhaseScreens'
-input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_v2_2021-02-18T13:00:36/residualPhaseScreens'
+input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_v3_2021-02-23T10:29:47/residualPhaseScreens'
 output_folder = '/mnt/disk4tb/METIS/METIS_CBASIC_CUBES'
 cpu_count = None
 
@@ -141,7 +141,15 @@ p.join()
 
 # save cube
 print(cube.shape)
-fits.writeto(os.path.join(output_folder, savename), np.float32(cube), overwrite=True)
+hdr = fits.Header()
+hdr.set('SCAO_DIR', input_folder)
+hdr.set('UNIT', 'meters')
+hdr.set('PISTON', 'removed')
+hdr.set('DURATION [s]', duration)
+hdr.set('SAMPLING [ms]', samp)
+hdr.set('COMMENT', 'Interp zoomWithMissingData')
+# ** add here other important variables used to create the cube ***
+fits.writeto(os.path.join(output_folder, savename), np.float32(cube), hdr, overwrite=True)
 
 # send email when simulation finished
 print(time.strftime("%Y-%m-%d %H:%M:%S: " + "%s\n"%conf['send_message'], time.localtime()))
