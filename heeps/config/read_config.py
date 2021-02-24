@@ -13,7 +13,7 @@ def read_config(verbose=False, **update_conf):
     # =============================================================================
     #           Console and file management 
     # =============================================================================
-    cpu_count = 10,                     # 1 = single core; None = max-1 cores
+    cpu_count = None,                     # 1 = single core; None = max-1 cores
     send_to = None,                     # user's email, for notifications
     prefix = '',                        # for saved files: e.g. 'test_'
     headless = False,                   # true if running on a headless server
@@ -73,7 +73,6 @@ def read_config(verbose=False, **update_conf):
     flux_star = 8.999e+10,              # [e-/s] HCI-L long, mag 0 (Jan 21, 2020)
     flux_bckg = 8.878e+04,              # [e-/s/pix]
     add_bckg = False,                   # true means background flux and photon noise are added 
-    cube_duration = 3600,               # cube duration in seconds
     lat = -24.59,                       # telescope latitude in deg (Armazones=-24.59 ,Paranal -24.63)
     dec = -5,                           # star declination in deg (e.g. 51 Eri -2.47)
     file_lyot_stop = 'pupil/ls_ravc_allglass_285.fits', # lyot stop file
@@ -139,11 +138,14 @@ def read_config(verbose=False, **update_conf):
     # =============================================================================
     #           Parameters for wavefront
     # ============================================================================
-    nframes = 10,                       # number of frames to crop the input data
+    cube_duration = 600,               # cube duration in seconds
+
+    nframes = 6000,                       # number of frames to crop the input data
     nstep = 1,                          # take 1 frame every nstep (cubesize = nframes/nstep)
 
     add_phase = True,                   # phase screens (SCAO residuals, NCPA, petal piston)
-    file_phase = 'wavefront/COMPASS_201810_RandomWind_100screens_meters.fits',
+#     file_phase = 'wavefront/COMPASS_201810_RandomWind_100screens_meters.fits',
+    file_phase = '/mnt/disk4tb/METIS/METIS_CBASIC_CUBES/cube_Cbasic_20210219_600s_100ms_0piston_meters_scao_only_285.fits',
     add_amp = False,                    # amplitude screens (Talbot effect)
     file_amp = 'wavefront/Talbot_LM_20201120_IMGP_meridian_allglass.fits',
 
