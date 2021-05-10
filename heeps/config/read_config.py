@@ -13,7 +13,11 @@ def read_config(verbose=False, **update_conf):
     # =============================================================================
     #           Console and file management 
     # =============================================================================
+<<<<<<< HEAD
     cpu_count = None,                     # 1 = single core; None = max-1 cores
+=======
+    cpu_count = None,                   # 1 = single core; None = max cores
+>>>>>>> ff9bdf6 (major update with new utility: multiCPU)
     send_to = None,                     # user's email, for notifications
     prefix = '',                        # for saved files: e.g. 'test_'
     headless = False,                   # true if running on a headless server
