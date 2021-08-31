@@ -13,11 +13,7 @@ def read_config(verbose=False, **update_conf):
     # =============================================================================
     #           Console and file management 
     # =============================================================================
-<<<<<<< HEAD
-    cpu_count = None,                     # 1 = single core; None = max-1 cores
-=======
     cpu_count = None,                   # 1 = single core; None = max cores
->>>>>>> ff9bdf6 (major update with new utility: multiCPU)
     send_to = None,                     # user's email, for notifications
     prefix = '',                        # for saved files: e.g. 'test_'
     headless = False,                   # true if running on a headless server
@@ -25,7 +21,7 @@ def read_config(verbose=False, **update_conf):
     # required directories for data (e.g. fits files)
     dir_current = '$HOME/heeps_metis',
     dir_input = 'input_files',
-    dir_output = 'output_files_Cbasic_v3',
+    dir_output = 'output_files',
     dir_temp = 'temp_files',
 
     # =============================================================================
@@ -36,7 +32,7 @@ def read_config(verbose=False, **update_conf):
     diam_nominal = 38.542,              # nominal diameter (for LS oversizing)
     diam_ext = 36.905,                  # effective outer circular aperture in m
     diam_int = 11.213,                  # effective central obscuration in m
-    file_pupil = 'pupil/ELT_allglass.fits',# entrance pupil file
+    f_pupil = 'pupil/ELT_allglass.fits',# entrance pupil file
     spi_width = 0.54,                   # spider width in m
     spi_angles = [0, 60, 120],          # spider angles in deg
     # if no valid pupil file, pupil will be created with the following params:
@@ -77,16 +73,10 @@ def read_config(verbose=False, **update_conf):
     mag_ref = 0,                        # reference magnitude for star and background fluxes
     flux_star = 8.999e+10,              # [e-/s] HCI-L long, mag 0 (Jan 21, 2020)
     flux_bckg = 8.878e+04,              # [e-/s/pix]
-<<<<<<< HEAD
-    starphot = 1e11,                    # aperture flux normalization (for VIP)
-#     cube_duration = 3600,               # cube duration in seconds
-=======
     cube_duration = 3600,               # cube duration in seconds
->>>>>>> e700c4d (adding test_starphot tool)
     lat = -24.59,                       # telescope latitude in deg (Armazones=-24.59 ,Paranal -24.63)
     dec = -5,                           # star declination in deg (e.g. 51 Eri -2.47)
-#     file_lyot_stop = 'pupil/ls_ravc_allglass_285.fits', # lyot stop file
-    file_lyot_stop = 'pupil/ls_ravc_allglass_285.fits', # lyot stop file
+    f_lyot_stop = 'pupil/ls_ravc_allglass_285.fits', # lyot stop file
     ls_dRext = 0.0282,                  # LS Rext undersize (% diam ext)
     ls_dRint = 0.0282,                  # LS Rint oversize (% diam ext)
     ls_dRspi = 0.037,                   # LS spider oversize (% diam ext)
@@ -94,15 +84,17 @@ def read_config(verbose=False, **update_conf):
     vc_charge = 2,                      # vortex topological charge
     vc_zoffset = 0,                     # vortex defocus in m (z axis)
     vc_chrom_leak = 2e-3,               # vortex chromatic leakage
+    add_cl_vort = False,                # add chromatic leakage at the vortex plane
+    add_cl_det = False,                 # add chromatic leakage at the detector plane
     ravc_calc = True,                   # calculate RA params (Mawet2013)
     ravc_t = 0.745,                     # (calc=False) mean-M1 RA trans
     ravc_r = 0.505,                     # (calc=False) mean-M1 RA radius wrt allglass
     ravc_misalign = [0,0,0,0,0,0],      # RA misalignment
     clc_diam = 80,                      # CLC occulter diam in mas
-    file_vc_trans = 'optics/agpm_trans.fits', # vortex transmittance
-    file_app_trans = 'optics/metis_gvapp_tx.fits', # APP transmittance
-    file_app_amp = 'optics/APP_stop_L_285_v2.fits', # APP amplitude
-    file_app_phase = 'optics/vAPP_Dshape_Lband_asymmetric.fits', # APP phase
+    f_vc_trans = 'optics/agpm_trans.fits', # vortex transmittance
+    f_app_trans = 'optics/metis_gvapp_tx.fits', # APP transmittance
+    f_app_amp = 'optics/APP_stop_L_285_v2.fits', # APP amplitude
+    f_app_phase = 'optics/vAPP_Dshape_Lband_asymmetric.fits', # APP phase
     app_strehl = 0.64,                   # APP Strehl ratio
     app_single_psf = 0.48,               # APP single PSF (4% leakage)
     student_distrib = True,              # use Student's distribution instead of Gaussian
@@ -151,33 +143,26 @@ def read_config(verbose=False, **update_conf):
     # =============================================================================
     #           Parameters for wavefront
     # ============================================================================
-    cube_duration = 600,               # cube duration in seconds
-
-    nframes = 6000,                       # number of frames to crop the input data
+    nframes = 10,                       # number of frames to crop the input data
     nstep = 1,                          # take 1 frame every nstep (cubesize = nframes/nstep)
 
     add_phase = True,                   # phase screens (SCAO residuals, NCPA, petal piston)
-#     file_phase = 'wavefront/COMPASS_201810_RandomWind_100screens_meters.fits',
-    file_phase = '/mnt/disk4tb/METIS/METIS_CBASIC_CUBES/cube_Cbasic_v3_20210223_600s_100ms_scao_only_285.fits',
+    f_phase = 'wavefront/COMPASS_201810_RandomWind_100screens_meters.fits',
     add_amp = False,                    # amplitude screens (Talbot effect)
-    file_amp = 'wavefront/Talbot_LM_20201120_IMGP_meridian_allglass.fits',
-
-    rms_phase_sta = 35.9,               # static (nm)
-    rms_phase_qlsf = 20,                # quasistatic low spatial freq (nm)
-    rms_phase_qhsf = 20,                # quasistatic high spatial freq (nm)
-    rms_phase_dyn = 40,                 # dynamic (nm)
+    f_amp = 'wavefront/Talbot_LM_20201120_IMGP_meridian_allglass.fits',
+    ncpa_sta = 35.9,                    # static (nm rms)
+    ncpa_qlsf = 20,                     # quasistatic low spatial freq (nm rms)
+    ncpa_qhsf = 20,                     # quasistatic high spatial freq (nm rms)
+    ncpa_dyn = 40,                      # dynamic (nm rms)
 
     add_point_err = False,              # pointing errors
-    file_point_err = 'wavefront/point_all_3600s_300ms.fits',
-    rms_point_qsta = 0.4,               # quasistatic (mas)
-    rms_point_dyn = 2,                  # dynamic (mas)
+    f_point_err = 'wavefront/point_all_3600s_300ms.fits',
+    point_qsta = 0.4,                   # quasistatic (mas rms)
+    point_dyn = 2,                      # dynamic (mas rms)
 
     add_apo_drift = False,              # apodizer drift
-    ptv_drift = 0.02,                   # (%)
+    apo_drift = 0.02,                   # (% ptv)
     
-    add_vort_chrom_leak = False,        # add chromatic leakage in the vortex plane
-    add_det_chrom_leak = False,         # add chromatic leakage in the detector plane
-
     )                                   # end of default conf dict
  
     # =============================================================================
@@ -206,9 +191,8 @@ def read_config(verbose=False, **update_conf):
     os.makedirs(conf['dir_temp'], exist_ok=True)
     
     # create paths to fits files
-    for filename in ['file_pupil', 'file_phase', 'file_amp', 'file_point_err', \
-            'file_lyot_stop', 'file_vc_trans', 'file_app_trans', \
-            'file_app_amp', 'file_app_phase']:
+    for filename in ['f_pupil', 'f_phase', 'f_amp', 'f_point_err', 'f_lyot_stop', \
+            'f_vc_trans', 'f_app_trans', 'f_app_amp', 'f_app_phase']:
         conf[filename] = os.path.join(conf['dir_input'], conf[filename])
     
     # downloading input files from Google Drive
