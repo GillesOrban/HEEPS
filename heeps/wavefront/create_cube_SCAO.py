@@ -19,13 +19,19 @@ duration = 600 #3600
 samp = 100 #300
 =======
 os.chdir(os.path.normpath(os.path.expandvars('$HOME/heeps_metis/input_files')))
-tag = 'Cbasic_20211004'#'Cbasic_20201130'
+tag = 'Cfull_20211007'#'Cbasic_20201130'
 prefix = 'Residual_phase_screen_'#'tarPhase_1hr_100ms_'
 suffix = 'ms'
+<<<<<<< HEAD
 duration = 600#3600
 samp = 100#300
 >>>>>>> 59a3165 (NCPA chromatic scaling)
 start = 2101#0#1001
+=======
+duration = 3600#600#
+samp = 300#100#
+start = 2101
+>>>>>>> d75245c (Cfull upgrade)
 nimg = 720
 band = 'L'
 npupil = 285#720
@@ -45,20 +51,26 @@ savename = 'cube_%s_%ss_%sms_0piston_meters_scao_only_%s_%s.fits'%(tag, duration
 #input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_2020-11-05T12:40:27/residualPhaseScreens'
 #input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_2020-11-30T20:52:24/residualPhaseScreens'
 #input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cbasic_uncorrected_2021-06-01T12:02:36/residualPhaseScreens'
+<<<<<<< HEAD
 input_folder = '/mnt/disk4tb/METIS/METIS_COMPASS_RAW_PRODUCTS/gorban_metis_baseline_Cfull_noWtt_2021-10-04T12:28:42/residualPhaseScreens'
 output_folder = 'wavefront/cbasic'
 >>>>>>> 59a3165 (NCPA chromatic scaling)
+=======
+input_folder = '/mnt/disk12tb/Users/gorban/METIS/METIS_COMPASS/gorban_metis_baseline_Cfull_noWtt_2021-10-07T09:00:32/residualPhaseScreens'
+output_folder = 'wavefront/cfull'
+>>>>>>> d75245c (Cfull upgrade)
 cpu_count = None
 
 # mask
 mask = fits.getdata(os.path.join(input_folder, 'Telescope_Pupil.fits'))
 # mask = crop_img(mask, nimg)
 mask_pupil = np.rot90(resize_img(mask, npupil))
-#fits.writeto(os.path.join(output_folder, 'mask_%s_%s_%s.fits'%(tag, band, npupil)), np.float32(mask_pupil), overwrite=True)
-fits.writeto(os.path.join(output_folder, 'mask_%s_%s.fits'%(tag, npupil)), np.float32(mask_pupil), overwrite=True)
+fits.writeto(os.path.join(output_folder, 'mask_%s_%s_%s.fits'%(tag, band, npupil)), np.float32(mask_pupil), overwrite=True)
 
 # filenames
 nframes = len([name for name in os.listdir(input_folder) if name.startswith(prefix)])
+nframes = 12000
+print('%s frames'%nframes)
 frames = [str(frame).zfill(6) if pad_frame is True else str(frame) \
     for frame in range(start, start + nframes*samp, samp)]
 filenames = np.array([os.path.join(input_folder, '%s%s%s.fits'%(prefix, frame, suffix)) \
