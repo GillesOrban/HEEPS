@@ -60,5 +60,12 @@ def remove_piston(filename):
 # create cube
 cube = multiCPU(remove_piston, posvars=[filenames], case='create cube SCAO', cpu_count=cpu_count)
 print(cube.shape)
+hdr = fits.Header()
+hdr.set('SCAO_DIR', input_folder)
+hdr.set('UNIT', 'meters')
+hdr.set('PISTON', 'removed')
+hdr.set('DURATION [s]', duration)
+hdr.set('SAMPLING [ms]', samp)
+
 fits.writeto(os.path.join(output_folder, savename), np.float32(cube), overwrite=True)
 notify(conf['send_message'], conf['send_to'])
